@@ -2,7 +2,7 @@
  * About component displays general information about Tangua Houseboat Booking.
  * This is a static page.
  */
-const About = () =>         <div className="p-6 max-w-4xl mx-auto pt-16">
+const About = () =>         <div className="p-6 max-w-4xl mx-auto pt-20">
             <h1 className="text-3xl font-bold mb-4 text-center">About Tangua Houseboat Booking</h1>
             <p className="text-lg mb-4">
                 Welcome to Tangua Houseboat Booking, your premier partner for unforgettable houseboat experiences in the serene and breathtaking Tangua Haor. We are dedicated to providing you with a unique blend of comfort, adventure, and tranquility amidst the stunning natural beauty of Bangladesh's largest freshwater wetland.

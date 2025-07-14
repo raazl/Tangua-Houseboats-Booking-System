@@ -1,4 +1,4 @@
-/**
+/** 
  * BookNow component displays a modal for booking a package.
  * It includes a form for user details and a confirmation button.
  * @param {object} props - The component props.

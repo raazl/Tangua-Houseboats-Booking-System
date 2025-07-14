@@ -28,7 +28,7 @@ const Register = () => {
                 <input type="email" placeholder="Email" className="w-full p-2 border rounded" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input type="tel" placeholder="Phone Number" className="w-full p-2 border rounded" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
                 <input type="password" placeholder="Password" className="w-full p-2 border rounded" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button type="submit" className="bg-[#89d9ff] text-white py-2 px-4 rounded">Register</button>
+                    <button type="submit" className="bg-[#3BAFDA] text-white py-2 px-4 rounded">Register</button>
             </form>
             <p className="mt-4 text-center">
                 Already have an account? <Link to="/login" className="text-tangua-lake-blue hover:underline">Sign In</Link>

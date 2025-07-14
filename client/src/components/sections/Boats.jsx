@@ -7,7 +7,7 @@ import { boats } from '../../data/boats';
  */
 const Boats = () => {
   return (
-    <section className="py-12 bg-tangua-cloud-white">
+    <section className="py-20 bg-tangua-cloud-white">
       <div className="container mx-auto">
         <h2 className="text-3xl font-bold text-center mb-8">Our Fleet</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
