@@ -7,13 +7,17 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependency directories and build outputs
 node_modules
 dist
 dist-ssr
+
+# Local configuration files (e.g., for development environment)
 *.local
 
-# Editor directories and files
+# Editor-specific directories and files to ignore
 .vscode/*
+# Keep extensions.json for recommended extensions
 !.vscode/extensions.json
 .idea
 .DS_Store

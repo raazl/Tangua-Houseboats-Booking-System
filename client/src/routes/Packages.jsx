@@ -6,7 +6,9 @@ import Boats from '../components/sections/Boats';
  */
 const Packages = () => {
   return (
+    // Main container for the Packages page
     <div>
+      {/* Boats component: Displays the list of all available houseboats */}
       <Boats />
     </div>
   );

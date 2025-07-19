@@ -7,10 +7,10 @@ import HeroImage from '../assets/images/HeroSection.png';
  */
 export const boats = [
   {
-    id: 'Rajar Tori Elite',
-    name: 'Rajar Tori Elite',
-    description: 'A luxurious houseboat with all modern amenities.',
-    imageUrl: HeroImage,
+    id: 'Rajar Tori Elite', // Unique identifier for the boat
+    name: 'Rajar Tori Elite', // Name of the boat
+    description: 'A luxurious houseboat with all modern amenities.', // Description of the boat
+    imageUrl: HeroImage, // URL to the boat's image
   },
   {
     id: 'Ponkhiraj',

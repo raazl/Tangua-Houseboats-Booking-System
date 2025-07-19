@@ -5,11 +5,11 @@
  */
 export const packages = [
     {
-        id: 1,
-        name: "Romantic Getaway",
-        price: 500,
-        description: "A perfect trip for couples.",
-        image: "/assets/packages/romantic.jpg",
+        id: 1, // Unique identifier for the package
+        name: "Romantic Getaway", // Name of the package
+        price: 500, // Price of the package
+        description: "A perfect trip for couples.", // Description of the package
+        image: "/assets/packages/romantic.jpg", // Image URL for the package
     },
     {
         id: 2,

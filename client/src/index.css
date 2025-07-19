@@ -1,7 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind CSS directives */
+@tailwind base; /* Includes Tailwind's base styles */
+@tailwind components; /* Includes Tailwind's component classes */
+@tailwind utilities; /* Includes Tailwind's utility classes */
 
+/* Global body styles */
 body {
-  @apply bg-tangua-cloud-white;
+  @apply bg-tangua-cloud-white; /* Applies a background color from the Tailwind config */
 }
