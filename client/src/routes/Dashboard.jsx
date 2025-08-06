@@ -1,17 +1,20 @@
-/**
- * Dashboard component serves as a placeholder for the user dashboard.
- * It currently displays a message indicating where user-specific information will appear.
- */
+import { useContext } from "react";
+import AuthContext from "../contexts/AuthContext";
+
 const Dashboard = () => {
-    return (
-        // Main container for the dashboard content
-        <div className="p-6 max-w-4xl mx-auto">
-            {/* Dashboard title */}
-            <h1 className="text-3xl font-bold mb-4">User Dashboard</h1>
-            {/* Placeholder text indicating future content */}
-            <p>Your bookings and profile details will appear here.</p>
-        </div>
-    );
+  const { user } = useContext(AuthContext);
+
+  if (!user) {
+    return <div className="text-center mt-10">Please log in to view your dashboard.</div>;
+  }
+
+  return (
+    <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded shadow">
+      <h1 className="text-2xl font-bold mb-4">Welcome, {user.name}!</h1>
+      <p className="mb-2">Email: {user.email}</p>
+      {/* Add more user info or dashboard features here */}
+    </div>
+  );
 };
 
-export default Dashboard;  
+export default Dashboard;

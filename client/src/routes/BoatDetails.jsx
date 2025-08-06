@@ -1,6 +1,8 @@
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { boatPackages } from '../data/boatPackages';
+import { createBooking } from '../utils/api';
+import AuthContext from '../contexts/AuthContext';
 
 /**
  * BoatDetails component displays the packages available for a specific boat,
@@ -9,34 +11,61 @@ import { boatPackages } from '../data/boatPackages';
 const BoatDetails = () => {
   // Get the boatId from the URL parameters
   const { boatId } = useParams();
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
   // Retrieve packages for the specific boat, or an empty array if none found
   const packages = boatPackages[boatId] || [];
 
   // State variables for managing booking form data
   const [selectedPackage, setSelectedPackage] = useState(null);
-  const [selectedDate, setSelectedDate] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [checkInDate, setCheckInDate] = useState('');
+  const [checkOutDate, setCheckOutDate] = useState('');
   const [guests, setGuests] = useState(1);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   // Handler for the booking submission
-  const handleBooking = () => {
+  const handleBooking = async () => {
+    if (!user) {
+      setError('You must be logged in to book a package.');
+      return;
+    }
+
     // Basic validation for form fields
     if (!selectedPackage) {
-      alert('Please select a package.');
+      setError('Please select a package.');
       return;
     }
-    if (!selectedDate) {
-      alert('Please select a date.');
+    if (!checkInDate) {
+      setError('Please select a check-in date.');
       return;
     }
-    if (!fullName || !email || !phone) {
-      alert('Please fill out all booking details.');
-      return;
+    if (!checkOutDate) {
+        setError('Please select a check-out date.');
+        return;
     }
-    // Display booking confirmation (in a real app, this would send data to a backend)
-    alert(`Booking successful!\nPackage: ${selectedPackage.name}\nDate: ${selectedDate}\nName: ${fullName}\nEmail: ${email}\nPhone: ${phone}\nGuests: ${guests}`);
+
+    const bookingData = {
+        packageId: selectedPackage.id,
+        boatName: boatId.replace(/-/g, ' ').toUpperCase(),
+        packageName: selectedPackage.name,
+        checkInDate,
+        checkOutDate,
+        numberOfGuests: guests,
+        totalPrice: selectedPackage.price * guests,
+    };
+
+    try {
+      await createBooking(bookingData);
+      setSuccess('Booking successful!');
+      setError('');
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 2000);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Booking failed. Please try again.');
+      setSuccess('');
+    }
   };
 
   return (
@@ -77,27 +106,16 @@ const BoatDetails = () => {
           <div className="mt-12 max-w-lg mx-auto">
             <h3 className="text-2xl font-bold text-center mb-4">Enter Your Details</h3>
             <div className="bg-tangua-bamboo-beige p-6 rounded-lg shadow-lg">
-              {/* Full Name input */}
-              <div className="mb-4">
-                <label htmlFor="fullName" className="block text-gray-700 font-bold mb-2">Full Name</label>
-                <input type="text" id="fullName" className="w-full p-2 border rounded" value={fullName} onChange={(e) => setFullName(e.target.value)} />
-              </div>
-              {/* Email input */}
-              <div className="mb-4">
-                <label htmlFor="email" className="block text-gray-700 font-bold mb-2">Email</label>
-                <input type="email" id="email" className="w-full p-2 border rounded" value={email} onChange={(e) => setEmail(e.target.value)} />
-              </div>
-              {/* Phone input */}
-              <div className="mb-4">
-                <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">Phone</label>
-                <input type="tel" id="phone" className="w-full p-2 border rounded" value={phone} onChange={(e) => setPhone(e.target.value)} />
-              </div>
               {/* Date and Guests input in a grid */}
               <div className="grid grid-cols-2 gap-4">
                 {/* Select Date input */}
                 <div className="mb-4">
-                  <label htmlFor="date" className="block text-gray-700 font-bold mb-2">Select Date</label>
-                  <input type="date" id="date" className="w-full p-2 border rounded" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
+                  <label htmlFor="checkInDate" className="block text-gray-700 font-bold mb-2">Check-in Date</label>
+                  <input type="date" id="checkInDate" className="w-full p-2 border rounded" value={checkInDate} onChange={(e) => setCheckInDate(e.target.value)} />
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="checkOutDate" className="block text-gray-700 font-bold mb-2">Check-out Date</label>
+                  <input type="date" id="checkOutDate" className="w-full p-2 border rounded" value={checkOutDate} onChange={(e) => setCheckOutDate(e.target.value)} />
                 </div>
                 {/* Number of Guests input */}
                 <div className="mb-4">
@@ -109,12 +127,15 @@ const BoatDetails = () => {
           </div>
         )}
 
+        {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+        {success && <p className="text-green-500 text-center mt-4">{success}</p>}
+
         {/* Book Now button */}
         <div className="text-center mt-12">
           <button
             onClick={handleBooking}
             className="bg-tangua-green-dark text-white font-bold py-3 px-8 rounded-lg hover:bg-tangua-green-light transition-colors disabled:bg-gray-400"
-            disabled={!selectedPackage || !selectedDate || !fullName || !email || !phone} // Button disabled until all required fields are filled
+            disabled={!selectedPackage || !checkInDate || !checkOutDate} // Button disabled until all required fields are filled
           >
             Book Now
           </button>

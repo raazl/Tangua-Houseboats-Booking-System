@@ -1,52 +1,76 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import AuthContext from "../contexts/AuthContext";
 
-/**
- * Register component provides a user registration form.
- * Users can create a new account by providing their full name, email, phone number, and password.
- * It also includes a link to the login page for existing users.
- */
 const Register = () => {
-    // State variables to store form input values
-    const [fullName, setFullName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [password, setPassword] = useState("");
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        password: "",
+    });
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+    const navigate = useNavigate();
+    const { register } = useContext(AuthContext);
 
-    // Handler for form submission
-    const handleSubmit = (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
-        // Log registration data to console (for demonstration purposes)
-        console.log("Registration Data:", { fullName, email, phoneNumber, password });
-        // In a real application, this data would be sent to a backend API for user registration
-        alert("Registration form submitted! Check console for data.");
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError("");
+        setSuccess("");
+        try {
+            await register(formData.name, formData.email, formData.password);
+            setSuccess("Registration successful! Redirecting...");
+            setTimeout(() => navigate("/"), 1500);
+        } catch (error) {
+            setError(
+                error?.response?.data?.message ||
+                error?.message ||
+                "Registration failed"
+            );
+        }
     };
 
     return (
-        // Main container for the registration form, centered on the screen
         <div className="flex items-center justify-center min-h-screen">
-            {/* Registration form card */}
             <div className="p-6 max-w-md mx-auto bg-white rounded-lg shadow-lg">
-            {/* Registration form title */}
-            <h1 className="text-2xl font-bold mb-4">Register</h1>
-            {/* Registration form */}
-            <form className="space-y-4" onSubmit={handleSubmit}>
-                {/* Full Name input field */}
-                <input type="text" placeholder="Full Name" className="w-full p-2 border rounded" value={fullName} onChange={(e) => setFullName(e.target.value)} />
-                {/* Email input field */}
-                <input type="email" placeholder="Email" className="w-full p-2 border rounded" value={email} onChange={(e) => setEmail(e.target.value)} />
-                {/* Phone Number input field */}
-                <input type="tel" placeholder="Phone Number" className="w-full p-2 border rounded" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-                {/* Password input field */}
-                <input type="password" placeholder="Password" className="w-full p-2 border rounded" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    {/* Register button */}
+                <h1 className="text-2xl font-bold mb-4">Register</h1>
+                <form className="space-y-4" onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Full Name"
+                        className="w-full p-2 border rounded"
+                        value={formData.name}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        className="w-full p-2 border rounded"
+                        value={formData.email}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        className="w-full p-2 border rounded"
+                        value={formData.password}
+                        onChange={handleChange}
+                    />
                     <button type="submit" className="bg-[#3BAFDA] text-white py-2 px-4 rounded">Register</button>
-            </form>
-            {/* Link to the login page */}
-            <p className="mt-4 text-center">
-                Already have an account? <Link to="/login" className="text-tangua-lake-blue hover:underline">Sign In</Link>
-            </p>
-        </div>
+                    {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
+                    {success && <div className="text-green-600 text-sm mt-2">{success}</div>}
+                </form>
+                <p className="mt-4 text-center">
+                    Already have an account? <Link to="/login" className="text-tangua-lake-blue hover:underline">Sign In</Link>
+                </p>
+            </div>
         </div>
     );
 };
