@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { boatPackages } from '../data/boatPackages';
 import { createBooking } from '../utils/api';
@@ -25,6 +25,25 @@ const BoatDetails = () => {
   const [guests, setGuests] = useState(1);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [unavailableDates, setUnavailableDates] = useState([]);
+
+  useEffect(() => {
+    const fetchUnavailableDates = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/bookings/unavailable-dates');
+        const data = await response.json();
+        if (response.ok) {
+          setUnavailableDates(data.unavailableDates);
+        } else {
+          console.error('Failed to fetch unavailable dates:', data.message);
+        }
+      } catch (error) {
+        console.error('Network error fetching unavailable dates:', error);
+      }
+    };
+
+    fetchUnavailableDates();
+  }, []);
 
   // Handler for the booking submission
   const handleBooking = async () => {
@@ -41,6 +60,10 @@ const BoatDetails = () => {
     if (!checkInDate) {
       setError('Please select a check-in date.');
       return;
+    }
+    if (unavailableDates.includes(checkInDate)) {
+        setError('The selected check-in date is already booked. Please choose another.');
+        return;
     }
     if (!name || !email || !phone) {
         setError('Please fill out all fields.');
@@ -116,7 +139,7 @@ const BoatDetails = () => {
                 {/* Select Date input */}
                 <div className="mb-4">
                   <label htmlFor="checkInDate" className="block text-gray-700 font-bold mb-2">Check-in Date</label>
-                  <input type="date" id="checkInDate" className="w-full p-2 border rounded" value={checkInDate} onChange={(e) => setCheckInDate(e.target.value)} />
+                  <input type="date" id="checkInDate" className={`w-full p-2 border rounded ${unavailableDates.includes(checkInDate) ? 'bg-red-100 border-red-500' : ''}`} value={checkInDate} onChange={(e) => setCheckInDate(e.target.value)} />
                 </div>
                 {/* Name input */}
                 <div className="mb-4">
