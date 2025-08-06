@@ -4,7 +4,9 @@ const BookNow = ({ onClose, packageData }) => {
     // State to manage form data
     const [formData, setFormData] = useState({
         checkInDate: '',
-        checkOutDate: '',
+        name: '',
+        email: '',
+        phone: '',
         numberOfGuests: 1,
         specialRequests: ''
     });
@@ -43,10 +45,12 @@ const BookNow = ({ onClose, packageData }) => {
                 boatName: packageData?.boatName || packageData?.name || 'Houseboat',
                 packageName: packageData?.name,
                 checkInDate: formData.checkInDate,
-                checkOutDate: formData.checkOutDate,
                 numberOfGuests: parseInt(formData.numberOfGuests),
-                totalPrice: packageData?.price || 0,
-                specialRequests: formData.specialRequests
+                totalPrice: (packageData?.price || 0) * parseInt(formData.numberOfGuests),
+                specialRequests: formData.specialRequests,
+                name: formData.name,
+                email: formData.email,
+                phone: formData.phone
             };
 
             console.log('Submitting booking:', bookingData);
@@ -68,7 +72,9 @@ const BookNow = ({ onClose, packageData }) => {
                 // Reset form
                 setFormData({
                     checkInDate: '',
-                    checkOutDate: '',
+                    name: '',
+                    email: '',
+                    phone: '',
                     numberOfGuests: 1,
                     specialRequests: ''
                 });
@@ -113,14 +119,36 @@ const BookNow = ({ onClose, packageData }) => {
                         required
                     />
 
-                    {/* Input for check-out date */}
+                    {/* Input for name */}
                     <input
-                        type="date"
-                        name="checkOutDate"
+                        type="text"
+                        name="name"
+                        placeholder="Full Name"
                         className="w-full p-2 border rounded"
-                        value={formData.checkOutDate}
+                        value={formData.name}
                         onChange={handleChange}
-                        min={formData.checkInDate || new Date().toISOString().split('T')[0]}
+                        required
+                    />
+
+                    {/* Input for email */}
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email Address"
+                        className="w-full p-2 border rounded"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
+
+                    {/* Input for phone */}
+                    <input
+                        type="tel"
+                        name="phone"
+                        placeholder="Phone Number"
+                        className="w-full p-2 border rounded"
+                        value={formData.phone}
+                        onChange={handleChange}
                         required
                     />
 

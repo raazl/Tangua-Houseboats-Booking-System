@@ -19,7 +19,9 @@ const BoatDetails = () => {
   // State variables for managing booking form data
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [checkInDate, setCheckInDate] = useState('');
-  const [checkOutDate, setCheckOutDate] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [guests, setGuests] = useState(1);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -40,8 +42,8 @@ const BoatDetails = () => {
       setError('Please select a check-in date.');
       return;
     }
-    if (!checkOutDate) {
-        setError('Please select a check-out date.');
+    if (!name || !email || !phone) {
+        setError('Please fill out all fields.');
         return;
     }
 
@@ -50,12 +52,15 @@ const BoatDetails = () => {
         boatName: boatId.replace(/-/g, ' ').toUpperCase(),
         packageName: selectedPackage.name,
         checkInDate,
-        checkOutDate,
         numberOfGuests: guests,
         totalPrice: selectedPackage.price * guests,
+        name,
+        email,
+        phone
     };
 
     try {
+      console.log('Submitting booking with data:', bookingData);
       await createBooking(bookingData);
       setSuccess('Booking successful!');
       setError('');
@@ -113,9 +118,20 @@ const BoatDetails = () => {
                   <label htmlFor="checkInDate" className="block text-gray-700 font-bold mb-2">Check-in Date</label>
                   <input type="date" id="checkInDate" className="w-full p-2 border rounded" value={checkInDate} onChange={(e) => setCheckInDate(e.target.value)} />
                 </div>
+                {/* Name input */}
                 <div className="mb-4">
-                  <label htmlFor="checkOutDate" className="block text-gray-700 font-bold mb-2">Check-out Date</label>
-                  <input type="date" id="checkOutDate" className="w-full p-2 border rounded" value={checkOutDate} onChange={(e) => setCheckOutDate(e.target.value)} />
+                  <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Full Name</label>
+                  <input type="text" id="name" className="w-full p-2 border rounded" value={name} onChange={(e) => setName(e.target.value)} />
+                </div>
+                {/* Email input */}
+                <div className="mb-4">
+                  <label htmlFor="email" className="block text-gray-700 font-bold mb-2">Email Address</label>
+                  <input type="email" id="email" className="w-full p-2 border rounded" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                {/* Phone input */}
+                <div className="mb-4">
+                  <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">Phone Number</label>
+                  <input type="tel" id="phone" className="w-full p-2 border rounded" value={phone} onChange={(e) => setPhone(e.target.value)} />
                 </div>
                 {/* Number of Guests input */}
                 <div className="mb-4">
@@ -135,7 +151,7 @@ const BoatDetails = () => {
           <button
             onClick={handleBooking}
             className="bg-tangua-green-dark text-white font-bold py-3 px-8 rounded-lg hover:bg-tangua-green-light transition-colors disabled:bg-gray-400"
-            disabled={!selectedPackage || !checkInDate || !checkOutDate} // Button disabled until all required fields are filled
+            disabled={!selectedPackage || !checkInDate || !name || !email || !phone} // Button disabled until all required fields are filled
           >
             Book Now
           </button>
