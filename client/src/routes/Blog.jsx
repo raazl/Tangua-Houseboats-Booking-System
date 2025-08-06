@@ -2,10 +2,6 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { blogPosts } from "../data/blogPosts";
 
-/**
- * Blog component displays a list of blog posts in a modern, full-width layout.
- * Each blog post is presented as a card with a cover image and an option to expand for more details.
- */
 const Blog = () => {
     // Get postId from URL parameters, if available
     const { postId } = useParams();

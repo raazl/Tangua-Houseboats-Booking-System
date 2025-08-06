@@ -1,9 +1,6 @@
-/**
- * Footer component displays copyright information and navigation links at the bottom of the page.
- */
+
 const Footer = () => {
     return (
-        // Footer section with background color and padding
         <footer className="bg-tangua-deep-green text-tangua-bamboo-beige py-6 mt-12">
             {/* Container for footer content, with responsive layout */}
             <div className="max-w-7xl mx-auto px-6 text-center md:flex md:justify-between md:items-center">

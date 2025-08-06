@@ -10,8 +10,6 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
     if (token) {
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      // Optionally, you could store user info in localStorage as well for persistence
-      // For now, just keep user null until login/register
     }
   }, []);
 

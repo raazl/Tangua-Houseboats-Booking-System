@@ -37,13 +37,13 @@ export const boatPackages = {
   // Packages available for 'Meghmollar-Majestic Stay at Tangua' boat
   'Meghmollar-Majestic Stay at Tangua': [
     {
-      id: 1,
+      id: 5,
       name: 'Luxury Weekend',
       price: 4000,
       description: '1 nights, 2 days of luxury.'
     },
     {
-      id: 5,
+      id: 6,
       name: 'Pure Relaxation',
       price: 7000,
       description: '2 nights, 3 days of pure relaxation.'

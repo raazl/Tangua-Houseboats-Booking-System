@@ -9,20 +9,19 @@ import BlogBoat2 from "../assets/images/BlogBoat2.jpg";
  */
 export const blogPosts = [
     {
-        // Unique identifier for the blog post
         id: "exploring-serene-waters",
-        // Title of the blog post
+        
         title: "Exploring the Serene Waters of Tangua",
-        // Short summary or introduction to the post
+      
         excerpt: "Discover the tranquility and natural beauty of Tangua Haor with our houseboats. A perfect escape from city life.",
-        // Full content of the blog post, formatted with HTML tags
+        
         content: `
             <p>Tangua Haor, a vast wetland in Bangladesh, is a hidden gem waiting to be explored. Its serene waters, lush greenery, and diverse wildlife offer a unique escape from the hustle and bustle of city life. Our houseboats provide the perfect vantage point to immerse yourself in this natural paradise.</p>
             <p>Imagine waking up to the gentle lapping of water, surrounded by the sounds of nature. Spend your days cruising through narrow canals, observing migratory birds, and witnessing breathtaking sunsets over the horizon. Our experienced guides will lead you to the most picturesque spots, ensuring you capture the true essence of Tangua Haor.</p>
             <p>Whether you're a nature enthusiast, a photographer, or simply seeking a peaceful retreat, Tangua Haor has something for everyone. Our houseboats are equipped with all the modern amenities to ensure a comfortable stay, allowing you to relax and rejuvenate amidst nature's embrace.</p>
             <p>Book your journey with us and embark on an unforgettable adventure into the heart of Tangua Haor. Experience the magic of this wetland and create memories that will last a lifetime.</p>
         `,
-        // Image associated with the blog post
+        
         image: BlogBoat, 
     },
     {

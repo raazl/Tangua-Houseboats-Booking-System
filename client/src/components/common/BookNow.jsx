@@ -28,7 +28,7 @@ const BookNow = ({ onClose, packageData }) => {
         setMessage('');
 
         try {
-            // Get the token from localStorage (adjust based on your auth implementation)
+            // Get the token from localStorage
             const token = localStorage.getItem('token') || sessionStorage.getItem('token');
 
             if (!token) {
@@ -37,7 +37,7 @@ const BookNow = ({ onClose, packageData }) => {
                 return;
             }
 
-            // Prepare booking data to match your backend controller
+            // Prepare booking data to match backend controller
             const bookingData = {
                 packageId: packageData?.id || packageData?._id,
                 boatName: packageData?.boatName || packageData?.name || 'Houseboat',
@@ -51,7 +51,7 @@ const BookNow = ({ onClose, packageData }) => {
 
             console.log('Submitting booking:', bookingData);
 
-            // Send booking data to your backend
+            // Send booking data to backend
             const response = await fetch('http://localhost:5000/api/bookings', {
                 method: 'POST',
                 headers: {
@@ -137,7 +137,7 @@ const BookNow = ({ onClose, packageData }) => {
                         required
                     />
 
-                    {/* Textarea for special requests */}
+                    {/* Text area for special requests */}
                     <textarea
                         name="specialRequests"
                         placeholder="Special Requests (Optional)"

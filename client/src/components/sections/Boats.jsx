@@ -7,7 +7,7 @@ import { boats } from '../../data/boats';
  */
 const Boats = () => {
   return (
-    // Section for displaying the fleet of houseboats
+    //displaying the fleet of houseboats
     <section className="py-20 bg-tangua-cloud-white">
       <div className="container mx-auto px-4">
         {/* Section title */}

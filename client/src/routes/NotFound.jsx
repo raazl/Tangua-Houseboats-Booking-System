@@ -1,9 +1,5 @@
 import { Link } from "react-router-dom";
 
-/**
- * NotFound component displays a 404 error page for routes that do not exist.
- * It provides a link to navigate back to the home page.
- */
 const NotFound = () => {
     return (
         // Main container for the 404 page, centered vertically and horizontally

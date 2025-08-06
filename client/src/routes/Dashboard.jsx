@@ -12,7 +12,7 @@ const Dashboard = () => {
     <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded shadow">
       <h1 className="text-2xl font-bold mb-4">Welcome, {user.name}!</h1>
       <p className="mb-2">Email: {user.email}</p>
-      {/* Add more user info or dashboard features here */}
+      
     </div>
   );
 };
